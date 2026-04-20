@@ -3,47 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoDeployX | Dashboard</title>
+    <title>AutoDeployX | DevSecOps Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <header>
+        <nav class="navbar">
             <div class="logo">🚀 AutoDeployX</div>
-            <div class="status-badge">System Live</div>
-        </header>
+            <div class="status-container">
+                <span class="status-dot"></span>
+                <span class="status-text">Pipeline Active</span>
+            </div>
+        </nav>
 
-        <main class="card">
-            <h1>Welcome to AutoDeployX</h1>
-            <p>Enter your details to interact with the dynamic pipeline.</p>
+        <main class="main-card">
+            <div class="card-header">
+                <h1>DevSecOps Dashboard</h1>
+                <p>Verify your deployment and interact with the automated pipeline.</p>
+            </div>
             
-            <form id="userForm">
-                <div class="input-group">
-                    <input type="text" id="nameInput" placeholder="Enter your name" required>
-                    <button type="submit" id="submitBtn">Submit</button>
+            <form id="actionForm" class="input-section">
+                <div class="input-wrapper">
+                    <input type="text" id="userInput" placeholder="Enter name or command..." required>
+                    <button type="submit" id="submitBtn">Execute</button>
                 </div>
             </form>
 
-            <div id="responseMessage" class="hidden">
-                <p>Hello, <span id="displayName"></span>! Your request is being processed.</p>
+            <div id="outputArea" class="output-card hidden">
+                <div class="output-header">
+                    <span>Console Output</span>
+                    <span class="timestamp">Just now</span>
+                </div>
+                <div class="output-content">
+                    <p>Status: <span class="success-text">Success</span></p>
+                    <p>Message: Hello <strong id="outputName"></strong>! Your request was processed via Jenkins Pipeline.</p>
+                </div>
             </div>
         </main>
 
-        <footer>
-            <p>Managed by <strong>Jatin Kapoor</strong> | DevSecOps Pipeline</p>
+        <footer class="footer">
+            <p>Built with ❤️ by <strong>Jatin Kapoor</strong></p>
+            <p class="tech-stack">AWS | Docker | Jenkins | Trivy</p>
         </footer>
     </div>
 
-    <script>
-        // Simple Dynamic Logic
-        document.getElementById('userForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('nameInput').value;
-            document.getElementById('displayName').innerText = name;
-            document.getElementById('responseMessage').classList.remove('hidden');
-            document.getElementById('nameInput').value = '';
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
