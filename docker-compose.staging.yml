@@ -4,12 +4,14 @@ services:
   backend:
     build: ./backend
     image: autodeployx_backend
+    container_name: backend_staging
 
 
   nginx:
     build: ./nginx
+    container_name: backend_staging
 
     ports:
-      - "80:80"
+      - "8081:80"
     depends_on:
       - backend
