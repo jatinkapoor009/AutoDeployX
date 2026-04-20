@@ -1,44 +1,49 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AutoDeployX</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoDeployX | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="container">
+        <header>
+            <div class="logo">🚀 AutoDeployX</div>
+            <div class="status-badge">System Live</div>
+        </header>
 
-  <div class="container">
-    <h1>🚀 AutoDeployX</h1>
-    <p class="subtitle">Automated CI/CD Deployment Platform</p>
+        <main class="card">
+            <h1>Welcome to AutoDeployX</h1>
+            <p>Enter your details to interact with the dynamic pipeline.</p>
+            
+            <form id="userForm">
+                <div class="input-group">
+                    <input type="text" id="nameInput" placeholder="Enter your name" required>
+                    <button type="submit" id="submitBtn">Submit</button>
+                </div>
+            </form>
 
-```
-<div class="card">
-  <input type="text" id="name" placeholder="Enter your name" />
-  <button onclick="submitName()">Submit</button>
-</div>
+            <div id="responseMessage" class="hidden">
+                <p>Hello, <span id="displayName"></span>! Your request is being processed.</p>
+            </div>
+        </main>
 
-<p id="response"></p>
-```
+        <footer>
+            <p>Managed by <strong>Jatin Kapoor</strong> | DevSecOps Pipeline</p>
+        </footer>
+    </div>
 
-  </div>
-
-<script>
-function submitName() {
-    const name = document.getElementById('name').value;
-
-    fetch('/api', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name })
-    })
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById('response').innerText = data.message;
-    });
-}
-</script>
-
+    <script>
+        // Simple Dynamic Logic
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('nameInput').value;
+            document.getElementById('displayName').innerText = name;
+            document.getElementById('responseMessage').classList.remove('hidden');
+            document.getElementById('nameInput').value = '';
+        });
+    </script>
 </body>
 </html>
-

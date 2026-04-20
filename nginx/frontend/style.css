@@ -1,58 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-margin: 0;
-font-family: Arial, sans-serif;
-background: linear-gradient(135deg, #0f172a, #1e293b);
-color: white;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .container {
-text-align: center;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
 }
 
-h1 {
-font-size: 3rem;
-margin-bottom: 10px;
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.subtitle {
-color: #94a3b8;
-margin-bottom: 30px;
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.status-badge {
+    background: #dcfce7;
+    color: #166534;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 .card {
-background: #1e293b;
-padding: 30px;
-border-radius: 10px;
-box-shadow: 0px 4px 20px rgba(0,0,0,0.4);
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-input {
-padding: 12px;
-width: 220px;
-border: none;
-border-radius: 5px;
-margin-right: 10px;
+h1 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus {
+    border-color: #2563eb;
 }
 
 button {
-padding: 12px 20px;
-border: none;
-background: #22c55e;
-color: white;
-border-radius: 5px;
-cursor: pointer;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
 }
 
 button:hover {
-background: #16a34a;
+    background: #1d4ed8;
 }
 
-#response {
-margin-top: 20px;
-font-size: 1.2rem;
+#responseMessage {
+    margin-top: 30px;
+    padding: 15px;
+    background: #eff6ff;
+    border-radius: 8px;
+    color: #1e40af;
 }
 
+.hidden {
+    display: none;
+}
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #999;
+}
