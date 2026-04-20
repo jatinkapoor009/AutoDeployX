@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>AutoDeployX</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>🚀 AutoDeployX</h1>
+  <div class="container">
+    <h1>🚀 AutoDeployX</h1>
+    <p class="subtitle">Automated CI/CD Deployment Platform</p>
 
-  <input type="text" id="name" placeholder="Enter your name">
-  <button onclick="sendData()">Submit</button>
+```
+<div class="card">
+  <input type="text" id="name" placeholder="Enter your name" />
+  <button onclick="submitName()">Submit</button>
+</div>
 
-  <h2 id="response"></h2>
+<p id="response"></p>
+```
 
-  <script>
-    async function sendData() {
-      let name = document.getElementById("name").value;
+  </div>
 
-      let res = await fetch("/api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name: name })
-      });
+<script>
+function submitName() {
+    const name = document.getElementById('name').value;
 
-      let data = await res.json();
-      document.getElementById("response").innerText = data.message;
-    }
-  </script>
+    fetch('/api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById('response').innerText = data.message;
+    });
+}
+</script>
 
 </body>
 </html>
