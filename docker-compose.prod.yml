@@ -4,12 +4,10 @@ services:
   backend:
     build: ./backend
     image: autodeployx_backend
-    container_name: backend_prod
 
 
   nginx:
     build: ./nginx
-    container_name: nginx_prod
 
     ports:
       - "80:80"
