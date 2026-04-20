@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>AutoDeployX</title>
+</head>
+<body>
+
+  <h1>🚀 AutoDeployX</h1>
+
+  <input type="text" id="name" placeholder="Enter your name">
+  <button onclick="sendData()">Submit</button>
+
+  <h2 id="response"></h2>
+
+  <script>
+    async function sendData() {
+      let name = document.getElementById("name").value;
+
+      let res = await fetch("/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: name })
+      });
+
+      let data = await res.json();
+      document.getElementById("response").innerText = data.message;
+    }
+  </script>
+
+</body>
+</html>
+
