@@ -1,53 +1,32 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoDeployX | DevSecOps Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>AutoDeployX</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="container">
-        <nav class="navbar">
-            <div class="logo">🚀 AutoDeployX</div>
-            <div class="status-container">
-                <span class="status-dot"></span>
-                <span class="status-text">Pipeline Active</span>
-            </div>
-        </nav>
 
-        <main class="main-card">
-            <div class="card-header">
-                <h1>DevSecOps Dashboard</h1>
-                <p>Verify your deployment and interact with the automated pipeline.</p>
-            </div>
-            
-            <form id="actionForm" class="input-section">
-                <div class="input-wrapper">
-                    <input type="text" id="userInput" placeholder="Enter name or command..." required>
-                    <button type="submit" id="submitBtn">Execute</button>
-                </div>
-            </form>
+<div class="container">
+  <h1>🚀 AutoDeployX</h1>
+  <p class="subtitle">DevSecOps Dashboard</p>
 
-            <div id="outputArea" class="output-card hidden">
-                <div class="output-header">
-                    <span>Console Output</span>
-                    <span class="timestamp">Just now</span>
-                </div>
-                <div class="output-content">
-                    <p>Status: <span class="success-text">Success</span></p>
-                    <p>Message: Hello <strong id="outputName"></strong>! Your request was processed via Jenkins Pipeline.</p>
-                </div>
-            </div>
-        </main>
+  <div class="card">
+    <input type="text" id="name" placeholder="Enter your name">
+    <br><br>
+    <button onclick="submitName()">Execute</button>
 
-        <footer class="footer">
-            <p>Built with ❤️ by <strong>Jatin Kapoor</strong></p>
-            <p class="tech-stack">AWS | Docker | Jenkins | Trivy</p>
-        </footer>
-    </div>
+```
+<p id="response"></p>
+```
 
-    <script src="script.js"></script>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
+
