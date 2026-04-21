@@ -1,6 +1,14 @@
-nginx:
-  build:
-    context: .
-    dockerfile: nginx/Dockerfile
-  ports:
-    - "80:80"
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend

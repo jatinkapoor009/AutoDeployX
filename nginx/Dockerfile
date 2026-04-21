@@ -5,6 +5,6 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
-COPY nginx/frontend/ /usr/share/nginx/html/
+COPY frontend/ /usr/share/nginx/html/
 
 EXPOSE 80
