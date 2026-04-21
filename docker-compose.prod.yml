@@ -3,13 +3,13 @@ version: '3'
 services:
   backend:
     build: ./backend
-    image: autodeployx_backend
-
+    image: autodeployx_backend_prod
 
   nginx:
-    build: ./nginx
-
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     ports:
-      - "80:80"
+      - "80:80"    # Production Port
     depends_on:
-      - backend
+      - backend 

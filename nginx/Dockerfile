@@ -1,5 +1,10 @@
-FROM nginx
+FROM nginx:alpine
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY frontend /usr/share/nginx/html
 
+RUN rm -rf /usr/share/nginx/html/*
+
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+
+COPY frontend/ /usr/share/nginx/html/
+
+EXPOSE 80

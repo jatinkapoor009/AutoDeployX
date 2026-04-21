@@ -3,13 +3,13 @@ version: '3'
 services:
   backend:
     build: ./backend
-    image: autodeployx_backend
-
+    image: autodeployx_backend_staging
 
   nginx:
-    build: ./nginx
-
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     ports:
-      - "8081:80"
+      - "8081:80"  # Staging Port
     depends_on:
       - backend
