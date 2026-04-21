@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AutoDeployX — DevSecOps Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <div class="nav-brand">🚀 Auto<span>DeployX</span></div>
+  <ul class="nav-links">
+    <li><a href="#" class="active">Dashboard</a></li>
+    <li><a href="#">Pipelines</a></li>
+    <li><a href="#">Containers</a></li>
+    <li><a href="#">Security</a></li>
+    <li><a href="#">Logs</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="status-dot"></div>
+    <span style="font-size:0.72rem;color:var(--muted)">System Healthy</span>
+    <button class="btn primary" onclick="triggerDeploy()">▶ New Deploy</button>
+  </div>
+</nav>
+
+<div class="wrapper">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-left">
+      <h1><span class="highlight">AutoDeployX</span><br/>DevSecOps Platform</h1>
+      <p>CI/CD · Docker · GitHub · Jenkins · Security Scanning</p>
+    </div>
+    <button class="deploy-btn" onclick="triggerDeploy()">⚡ Trigger Pipeline</button>
+  </div>
+
+  <!-- ── STAT CARDS ── -->
+  <div class="stats-grid">
+    <div class="stat-card" style="animation-delay:0.05s">
+      <div class="stat-label">Total Builds</div>
+      <div class="stat-value accent" id="stat-builds">0</div>
+      <div class="stat-sub">↑ 12 this week</div>
+    </div>
+    <div class="stat-card" style="animation-delay:0.1s">
+      <div class="stat-label">Success Rate</div>
+      <div class="stat-value green" id="stat-success">0%</div>
+      <div class="stat-sub">Last 30 builds</div>
+    </div>
+    <div class="stat-card" style="animation-delay:0.15s">
+      <div class="stat-label">Avg Deploy Time</div>
+      <div class="stat-value yellow">2m 14s</div>
+      <div class="stat-sub">↓ 18s faster</div>
+    </div>
+    <div class="stat-card" style="animation-delay:0.2s">
+      <div class="stat-label">Active Containers</div>
+      <div class="stat-value accent" id="stat-containers">0</div>
+      <div class="stat-sub">DockerHub synced</div>
+    </div>
+    <div class="stat-card" style="animation-delay:0.25s">
+      <div class="stat-label">Security Score</div>
+      <div class="stat-value green">A+</div>
+      <div class="stat-sub">0 critical CVEs</div>
+    </div>
+  </div>
+
+  <!-- ── MAIN GRID ── -->
+  <div class="main-grid">
+
+    <!-- LEFT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:1.5rem">
+
+      <!-- PIPELINE TRIGGER PANEL -->
+      <div class="panel">
+        <div class="panel-header">
+          <strong>🔧 Pipeline Trigger</strong>
+          <span id="pipe-status-label">Idle</span>
+        </div>
+
+        <div id="trigger-form">
+          <div class="input-wrap">
+            <label>Developer / Username</label>
+            <input id="dev-name" type="text" placeholder="e.g. jatin" />
+          </div>
+          <div class="input-wrap">
+            <label>Repository</label>
+            <input id="repo-name" type="text" placeholder="e.g. my-app" value="autodeployx"/>
+          </div>
+          <div class="input-wrap">
+            <label>Branch</label>
+            <select id="branch-name">
+              <option>main</option>
+              <option>develop</option>
+              <option>feature/ci-update</option>
+              <option>hotfix</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:flex-end">
+            <button class="btn primary" onclick="runPipeline()" id="run-btn" style="padding:10px 20px">▶ Run</button>
+          </div>
+        </div>
+
+        <div class="pipeline-wrap">
+          <div class="section-label">CI/CD Stages</div>
+          <div class="pipeline-stages" id="pipeline-stages"></div>
+
+          <div class="section-label">Build Log</div>
+          <div class="terminal" id="terminal">
+            <span class="log-line dim">// AutoDeployX ready. Trigger a pipeline to begin.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUILD HISTORY PANEL -->
+      <div class="panel">
+        <div class="panel-header">
+          <strong>📋 Build History</strong>
+          <span>Last 5 runs</span>
+        </div>
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Developer</th>
+              <th>Branch</th>
+              <th>Commit</th>
+              <th>Status</th>
+              <th>Duration</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <tr>
+              <td colspan="7" style="text-align:center;color:var(--muted);padding:1.5rem">
+                No builds yet. Trigger a pipeline.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /LEFT COLUMN -->
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- DOCKER IMAGES -->
+      <div class="panel">
+        <div class="panel-header"><strong>🐳 Docker Images</strong></div>
+        <div id="docker-list">
+          <div class="docker-item">
+            <span class="docker-icon">📦</span>
+            <div>
+              <div class="docker-name">autodeployx-backend</div>
+              <div class="docker-tag">latest · 128MB</div>
+            </div>
+            <span class="badge success">● live</span>
+          </div>
+          <div class="docker-item">
+            <span class="docker-icon">🌐</span>
+            <div>
+              <div class="docker-name">autodeployx-nginx</div>
+              <div class="docker-tag">latest · 24MB</div>
+            </div>
+            <span class="badge success">● live</span>
+          </div>
+          <div class="docker-item">
+            <span class="docker-icon">🗄️</span>
+            <div>
+              <div class="docker-name">autodeployx-db</div>
+              <div class="docker-tag">postgres:15 · 312MB</div>
+            </div>
+            <span class="badge running">● running</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVER METRICS -->
+      <div class="panel">
+        <div class="panel-header"><strong>📊 Server Metrics</strong></div>
+        <div class="metric-row">
+          <div class="metric-label">CPU Usage <span id="cpu-val">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="cpu-bar" style="width:0%"></div></div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Memory <span id="mem-val">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="mem-bar" style="width:0%"></div></div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Disk I/O <span id="disk-val">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="disk-bar" style="width:0%"></div></div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Network <span id="net-val">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="net-bar" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <!-- SECURITY SCAN -->
+      <div class="panel">
+        <div class="panel-header"><strong>🔒 Security Scan</strong></div>
+        <div class="sec-item">
+          <span class="sec-icon">🛡️</span>
+          <span class="sec-name">OWASP Top 10</span>
+          <span class="sec-status pass">✓ PASS</span>
+        </div>
+        <div class="sec-item">
+          <span class="sec-icon">🔐</span>
+          <span class="sec-name">Secret Detection</span>
+          <span class="sec-status pass">✓ PASS</span>
+        </div>
+        <div class="sec-item">
+          <span class="sec-icon">📦</span>
+          <span class="sec-name">Dependency Audit</span>
+          <span class="sec-status warn">⚠ 2 LOW</span>
+        </div>
+        <div class="sec-item">
+          <span class="sec-icon">🐳</span>
+          <span class="sec-name">Container Scan</span>
+          <span class="sec-status pass">✓ PASS</span>
+        </div>
+        <div class="sec-item">
+          <span class="sec-icon">🌐</span>
+          <span class="sec-name">SSL/TLS Check</span>
+          <span class="sec-status pass">✓ PASS</span>
+        </div>
+      </div>
+
+      <!-- GITHUB EVENTS -->
+      <div class="panel">
+        <div class="panel-header"><strong>🐙 GitHub Events</strong></div>
+        <div id="gh-events">
+          <div class="docker-item">
+            <span>⬆️</span>
+            <div>
+              <div class="docker-name" style="font-size:0.75rem">Push to main</div>
+              <div class="docker-tag">Triggered Jenkins · 2m ago</div>
+            </div>
+          </div>
+          <div class="docker-item">
+            <span>🔀</span>
+            <div>
+              <div class="docker-name" style="font-size:0.75rem">PR #14 merged</div>
+              <div class="docker-tag">feature/auth-update · 18m ago</div>
+            </div>
+          </div>
+          <div class="docker-item">
+            <span>🏷️</span>
+            <div>
+              <div class="docker-name" style="font-size:0.75rem">Tag v1.4.2 created</div>
+              <div class="docker-tag">Release candidate · 1h ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /SIDEBAR -->
+
+  </div><!-- /main-grid -->
+</div><!-- /wrapper -->
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toasts"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
