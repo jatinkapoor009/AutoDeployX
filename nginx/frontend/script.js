@@ -1,31 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const actionForm = document.getElementById('actionForm');
-    const userInput = document.getElementById('userInput');
-    const outputArea = document.getElementById('outputArea');
-    const outputName = document.getElementById('outputName');
-    const submitBtn = document.getElementById('submitBtn');
+// Button aur Input ko select karna
+const btn = document.getElementById('btn');
+const input = document.getElementById('userName');
+const outputDiv = document.getElementById('output');
+const messagePara = document.getElementById('message');
 
-    actionForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+// Button click hone par kya hoga
+btn.addEventListener('click', () => {
+    const name = input.value;
 
-        // Button loading state
-        submitBtn.innerText = 'Processing...';
-        submitBtn.disabled = true;
-
-        // Simulate a small delay for "DevOps processing" feel
-        setTimeout(() => {
-            const nameValue = userInput.value;
-            
-            // Show the output card
-            outputName.innerText = nameValue;
-            outputArea.classList.remove('hidden');
-
-            // Reset button
-            submitBtn.innerText = 'Execute';
-            submitBtn.disabled = false;
-            
-            // Clear input
-            userInput.value = '';
-        }, 800);
-    });
+    if (name.trim() === "") {
+        alert("Please enter a name!");
+    } else {
+        // Output dikhana
+        outputDiv.classList.remove('hidden');
+        messagePara.innerText = `Hello ${name}, AutoDeployX is running successfully! ✅`;
+        console.log("Pipeline executed for:", name);
+    }
 });

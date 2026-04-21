@@ -1,32 +1,27 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AutoDeployX</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoDeployX Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="container">
-  <h1>🚀 AutoDeployX</h1>
-  <p class="subtitle">DevSecOps Dashboard</p>
+    <div class="container">
+        <h1>🚀 AutoDeployX</h1>
+        <p>DevSecOps Dashboard</p>
+        
+        <div class="card">
+            <input type="text" id="userName" placeholder="Enter your name">
+            <button id="btn">Execute</button>
+        </div>
 
-  <div class="card">
-    <input type="text" id="name" placeholder="Enter your name">
-    <br><br>
-    <button onclick="submitName()">Execute</button>
+        <div id="output" class="hidden">
+            <p id="message"></p>
+        </div>
+    </div>
 
-```
-<p id="response"></p>
-```
-
-  </div>
-</div>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
-
