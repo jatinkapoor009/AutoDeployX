@@ -9,17 +9,16 @@ environment {
 STAGING_FILE = "docker-compose.staging.yml"
 PROD_FILE = "docker-compose.prod.yml"
 
-```
+
 DOCKER_USER = "jatink9599"
 IMAGE_BACKEND = "autodeployx-backend"
 IMAGE_NGINX = "autodeployx-nginx"
-```
+
 
 }
 
 stages {
 
-```
 stage('Checkout Code') {
     steps {
         git branch: 'main', url: 'https://github.com/jatinkapoor009/AutoDeployX.git'
@@ -108,7 +107,6 @@ stage('Production Test') {
         sh 'docker ps'
     }
 }
-```
 
 }
 
