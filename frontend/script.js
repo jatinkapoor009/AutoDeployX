@@ -1,5 +1,20 @@
 // ── AutoDeployX — script.js ──
 
+// ── PAGE NAVIGATION ──
+function showPage(pageId, clickedLink) {
+  // Saare pages hide karo
+  document.querySelectorAll('.page-section').forEach(p => p.style.display = 'none');
+  // Target page show karo
+  document.getElementById('page-' + pageId).style.display = 'block';
+  // Active link update karo
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  if (clickedLink) clickedLink.classList.add('active');
+  // Page top pe le jao
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  return false;
+}
+
+// ── PIPELINE STAGES DATA ──
 const STAGES = [
   { id: 'checkout', name: 'Checkout', icon: '📥' },
   { id: 'install',  name: 'Install',  icon: '📦' },
@@ -68,9 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ── COUNT-UP ANIMATION ──
 function animateStats() {
-  countUp('stat-builds',     0,   147, 1200);
-  countUp('stat-success',    0,    94, 1400, '%');
-  countUp('stat-containers', 0,     6,  900);
+  countUp('stat-builds',     0, 147, 1200);
+  countUp('stat-success',    0,  94, 1400, '%');
+  countUp('stat-containers', 0,   6,  900);
 }
 
 function countUp(id, from, to, duration, suffix = '') {
@@ -97,8 +112,8 @@ function animateMetrics() {
 }
 
 function setMetric(name, val) {
-  document.getElementById(name + '-val').textContent  = val + '%';
-  document.getElementById(name + '-bar').style.width  = val + '%';
+  document.getElementById(name + '-val').textContent = val + '%';
+  document.getElementById(name + '-bar').style.width = val + '%';
 }
 
 // ── RENDER PIPELINE STAGES ──
@@ -140,9 +155,10 @@ function toast(msg, type = 'info', duration = 3500) {
   setTimeout(() => t.remove(), duration);
 }
 
-// ── TRIGGER BUTTON (from hero) ──
+// ── TRIGGER BUTTON (from hero / navbar) ──
 function triggerDeploy() {
   const nameEl = document.getElementById('dev-name');
+  if (!nameEl) return;
   nameEl.focus();
   toast('Enter your name and click Run ▶', 'info');
   nameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -184,7 +200,7 @@ async function runPipeline() {
       appendLog(log, type);
     }
 
-    // ~8% chance of test failure (realistic simulation)
+    // ~8% chance of test failure — realistic simulation
     if (stage.id === 'test' && Math.random() < 0.08) {
       stateMap[stage.id] = 'failed';
       renderStages(stateMap);
@@ -237,11 +253,7 @@ function renderHistory() {
       <td>${b.dev}</td>
       <td style="color:var(--accent)">⎇ ${b.branch}</td>
       <td style="color:var(--muted);font-size:0.72rem">${b.commit}</td>
-      <td>
-        <span class="badge ${b.status}">
-          ${b.status === 'success' ? '✓ Success' : '✗ Failed'}
-        </span>
-      </td>
+      <td><span class="badge ${b.status}">${b.status === 'success' ? '✓ Success' : '✗ Failed'}</span></td>
       <td style="color:var(--muted)">${b.duration}</td>
       <td style="color:var(--muted)">${b.time}</td>
     </tr>
