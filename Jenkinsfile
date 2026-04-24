@@ -54,14 +54,14 @@ stages {
     stage('Tag Images') {
         steps {
             sh 'docker tag autodeployx_backend_prod $DOCKER_USER/$IMAGE_BACKEND:latest'
-            sh 'docker tag autodeployx-pipeline_nginx $DOCKER_USER/$IMAGE_NGINX:latest'
+            
         }
     }
 
     stage('Push to DockerHub') {
         steps {
             sh 'docker push $DOCKER_USER/$IMAGE_BACKEND:latest'
-            sh 'docker push $DOCKER_USER/$IMAGE_NGINX:latest'
+            
         }
     }
 
