@@ -3,6 +3,7 @@ version: '3'
 services:
   backend:
     build: ./backend
+    restart: unless-stopped
     image: autodeployx_backend_prod
 
   nginx:
@@ -13,3 +14,4 @@ services:
       - "80:80"    # Production Port
     depends_on:
       - backend 
+    restart: unless-stopped

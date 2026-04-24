@@ -6,8 +6,8 @@ githubPush()
 }
 
 environment {
-STAGING_FILE = "docker-compose.staging.yml"
-PROD_FILE = "docker-compose.prod.yml"
+STAGING_FILE = "docker compose.staging.yml"
+PROD_FILE = "docker compose.prod.yml"
 
 
 DOCKER_USER = "jatink9599"
@@ -28,7 +28,7 @@ stage('Checkout Code') {
 stage('Build Images') {
     steps {
         echo 'Building Docker images...'
-        sh 'docker-compose -f ${STAGING_FILE} build'
+        sh 'docker compose -f ${STAGING_FILE} build'
     }
 }
 
@@ -36,8 +36,8 @@ stage('Cleanup Old Containers') {
     steps {
         echo 'Cleaning old containers (safe cleanup)...'
         sh '''
-        docker-compose -p staging -f ${STAGING_FILE} down --remove-orphans || true
-        docker-compose -p prod -f ${PROD_FILE} down --remove-orphans || true
+        docker compose -p staging -f ${STAGING_FILE} down --remove-orphans || true
+        docker compose -p prod -f ${PROD_FILE} down --remove-orphans || true
         '''
     }
 }
@@ -72,7 +72,7 @@ stage('Deploy to Staging') {
     steps {
         echo 'Deploying to STAGING...'
         sh '''
-        docker-compose -p staging -f ${STAGING_FILE} up -d
+        docker compose -p staging -f ${STAGING_FILE} up -d
         '''
     }
 }
@@ -95,7 +95,7 @@ stage('Deploy to Production') {
     steps {
         echo 'Deploying to PRODUCTION...'
         sh '''
-        docker-compose -p prod -f ${PROD_FILE} up -d
+        docker compose -p prod -f ${PROD_FILE} up -d
         '''
     }
 }
