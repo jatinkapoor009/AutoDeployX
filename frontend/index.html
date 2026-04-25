@@ -168,7 +168,7 @@
     <div class="panel">
       <div class="panel-header"><strong>🔁 Main Pipeline — Staging → Production</strong><span class="badge success">● Active</span></div>
       <div style="padding:1.5rem">
-        <p style="color:var(--muted);font-size:0.82rem;margin-bottom:1.2rem">Yeh pipeline tab trigger hoti hai jab developer GitHub ke <code style="color:var(--accent)">main</code> branch pe code push karta hai. Pehle staging pe deploy hota hai, phir manual approval ke baad production pe jaata hai.</p>
+        <p style="color:var(--muted);font-size:0.82rem;margin-bottom:1.2rem">This pipeline triggers whenever a developer pushes code to the GitHub <code style="color:var(--accent)">main</code> branch. It first deploys to staging, then proceeds to production after manual approval.</p>
         <div class="pipeline-stages" style="margin-bottom:0">
           <div class="stage done"><div class="stage-dot">📥</div><div class="stage-name">Checkout</div></div>
           <div class="stage done"><div class="stage-dot">🏗️</div><div class="stage-name">Build</div></div>
@@ -191,16 +191,16 @@
     <div class="panel">
       <div class="panel-header"><strong>📋 Pipeline Stages — Detail</strong></div>
       <table class="history-table">
-        <thead><tr><th>Stage</th><th>Kya Hota Hai</th><th>Tool</th><th>Status</th></tr></thead>
+        <thead><tr><th>Stage</th><th>Description</th><th>Tool</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td>📥 Checkout Code</td><td>GitHub se latest code pull hota hai</td><td>Git</td><td><span class="badge success">✓ Pass</span></td></tr>
-          <tr><td>🏗️ Build Images</td><td>Docker images banti hain staging compose se</td><td>Docker</td><td><span class="badge success">✓ Pass</span></td></tr>
-          <tr><td>🔐 DockerHub Login</td><td>Jenkins credentials se secure login</td><td>withCredentials()</td><td><span class="badge success">✓ Pass</span></td></tr>
-          <tr><td>🏷️ Tag Images</td><td>Images ko proper naam/version tag milta hai</td><td>Docker CLI</td><td><span class="badge success">✓ Pass</span></td></tr>
-          <tr><td>⬆️ Push to DockerHub</td><td>Tagged images cloud registry pe push hoti hain</td><td>DockerHub</td><td><span class="badge success">✓ Pass</span></td></tr>
-          <tr><td>🧪 Deploy to Staging</td><td>Staging server pe deploy + 10s health check</td><td>docker-compose</td><td><span class="badge success">✓ Pass</span></td></tr>
-          <tr><td>✅ Approval Gate</td><td>Manual approval — "Yes Deploy" click karna hota hai</td><td>Jenkins Input</td><td><span class="badge running">⏸ Waiting</span></td></tr>
-          <tr><td>🚀 Deploy to Production</td><td>Production server pe final live deploy</td><td>docker-compose</td><td><span class="badge success">✓ Pass</span></td></tr>
+          <tr><td>📥 Checkout Code</td><td>Latest code is pulled from GitHub</td><td>Git</td><td><span class="badge success">✓ Pass</span></td></tr>
+          <tr><td>🏗️ Build Images</td><td>Docker images are built using staging compose file</td><td>Docker</td><td><span class="badge success">✓ Pass</span></td></tr>
+          <tr><td>🔐 DockerHub Login</td><td>Secure login using Jenkins credentials</td><td>withCredentials()</td><td><span class="badge success">✓ Pass</span></td></tr>
+          <tr><td>🏷️ Tag Images</td><td>Images are tagged with proper names and versions</td><td>Docker CLI</td><td><span class="badge success">✓ Pass</span></td></tr>
+          <tr><td>⬆️ Push to DockerHub</td><td>Tagged images are pushed to the cloud registry</td><td>DockerHub</td><td><span class="badge success">✓ Pass</span></td></tr>
+          <tr><td>🧪 Deploy to Staging</td><td>Deployment to staging server with a 10s health check</td><td>docker-compose</td><td><span class="badge success">✓ Pass</span></td></tr>
+          <tr><td>✅ Approval Gate</td><td>Manual approval — requires clicking "Yes Deploy"</td><td>Jenkins Input</td><td><span class="badge running">⏸ Waiting</span></td></tr>
+          <tr><td>🚀 Deploy to Production</td><td>Final live deployment to the production server</td><td>docker-compose</td><td><span class="badge success">✓ Pass</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -247,7 +247,7 @@
       <table class="history-table">
         <thead><tr><th>Container Name</th><th>Image</th><th>Port</th><th>Role</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td style="color:var(--accent)">autodeployx_nginx_1</td><td style="color:var(--muted)">autodeployx-nginx:latest</td><td>8081→80</td><td>Frontend serve karta hai — HTML/CSS/JS</td><td><span class="badge success">● Running</span></td></tr>
+          <tr><td style="color:var(--accent)">autodeployx_nginx_1</td><td style="color:var(--muted)">autodeployx-nginx:latest</td><td>8081→80</td><td>Serves Frontend — HTML/CSS/JS</td><td><span class="badge success">● Running</span></td></tr>
           <tr><td style="color:var(--accent)">autodeployx_backend_1</td><td style="color:var(--muted)">autodeployx-backend:latest</td><td>3000</td><td>Backend API — Node.js server</td><td><span class="badge success">● Running</span></td></tr>
           <tr><td style="color:var(--accent)">autodeployx_db_1</td><td style="color:var(--muted)">postgres:15</td><td>5432</td><td>Database — PostgreSQL</td><td><span class="badge running">● Running</span></td></tr>
         </tbody>
@@ -257,196 +257,81 @@
       <div class="panel">
         <div class="panel-header"><strong>📦 DockerHub Images</strong></div>
         <div class="docker-item"><span class="docker-icon">📦</span><div style="flex:1"><div class="docker-name">jatink9599/autodeployx-backend</div><div class="docker-tag">Node.js 18 Alpine · 128MB · Auto pushed by Jenkins</div></div><span class="badge success">latest</span></div>
-        <div class="docker-item"><span class="docker-icon">🌐</span><div style="flex:1"><div class="docker-name">jatink9599/autodeployx-nginx</div><div class="docker-tag">Nginx Alpine · 24MB · Frontend files serve karta hai</div></div><span class="badge success">latest</span></div>
-        <div style="padding:1rem 1.5rem;background:var(--surface2);border-top:1px solid var(--border);font-size:0.72rem;color:var(--muted)">💡 Jenkins pipeline automatically in images ko build, tag aur push karta hai DockerHub pe — har git push pe.</div>
+        <div class="docker-item"><span class="docker-icon">🌐</span><div style="flex:1"><div class="docker-name">jatink9599/autodeployx-nginx</div><div class="docker-tag">Nginx Alpine · 24MB · Serves frontend files</div></div><span class="badge success">latest</span></div>
+        <div style="padding:1rem 1.5rem;background:var(--surface2);border-top:1px solid var(--border);font-size:0.72rem;color:var(--muted)">💡 Jenkins pipeline automatically builds, tags, and pushes these images to DockerHub — on every git push.</div>
       </div>
       <div class="panel">
         <div class="panel-header"><strong>🗂️ Docker Compose Files</strong></div>
-        <div class="docker-item"><span>📄</span><div><div class="docker-name">docker-compose.yml</div><div class="docker-tag">Default — Local development ke liye</div></div></div>
-        <div class="docker-item"><span>🧪</span><div><div class="docker-name">docker-compose.staging.yml</div><div class="docker-tag">Staging — Jenkins build aur test ke liye</div></div></div>
-        <div class="docker-item"><span>🚀</span><div><div class="docker-name">docker-compose.prod.yml</div><div class="docker-tag">Production — Live server deploy ke liye</div></div></div>
+        <div class="docker-item"><span>📄</span><div><div class="docker-name">docker-compose.yml</div><div class="docker-tag">Default — Used for Local development</div></div></div>
+        <div class="docker-item"><span>🧪</span><div><div class="docker-name">docker-compose.staging.yml</div><div class="docker-tag">Staging — Used for Jenkins build and test</div></div></div>
+        <div class="docker-item"><span>🚀</span><div><div class="docker-name">docker-compose.prod.yml</div><div class="docker-tag">Production — Used for Live server deployment</div></div></div>
       </div>
     </div>
     <div class="panel">
       <div class="panel-header"><strong>🏗️ Nginx Dockerfile — Explained</strong></div>
       <div class="terminal" style="height:auto;padding:1.2rem">
         <span class="log-line info">FROM nginx:alpine</span><span class="log-line dim">          # Lightweight nginx base image (5MB)</span><br>
-        <span class="log-line dim">RUN rm -rf /usr/share/nginx/html/*</span><span class="log-line dim">  # Default files hata do</span><br>
+        <span class="log-line dim">RUN rm -rf /usr/share/nginx/html/*</span><span class="log-line dim">  # Remove default files</span><br>
         <span class="log-line success">COPY nginx/nginx.conf /etc/nginx/nginx.conf</span><span class="log-line dim">  # Custom config</span><br>
-        <span class="log-line success">COPY frontend/ /usr/share/nginx/html/</span><span class="log-line dim">       # HTML/CSS/JS copy karo</span><br>
-        <span class="log-line warn">EXPOSE 80</span><span class="log-line dim">                          # Port expose karo</span>
+        <span class="log-line success">COPY frontend/ /usr/share/nginx/html/</span><span class="log-line dim">        # Copy HTML/CSS/JS files</span><br>
+        <span class="log-line warn">EXPOSE 80</span><span class="log-line dim">                          # Expose port 80</span>
       </div>
     </div>
   </div>
 </div>
 </div>
 
-
 <!-- ════════ PAGE: SECURITY ════════ -->
-<div id="page-security" class="page-section" style="display:none">
+<div id="page-containers" class="page-section" style="display:none">
 <div class="wrapper">
   <div class="hero">
     <div class="hero-left">
-      <h1><span class="highlight">Security</span></h1>
-      <p>DevSecOps — Security integrated at every pipeline stage</p>
+      <h1><span class="highlight">Containers</span></h1>
+      <p>Docker & DockerHub — Image Management & Runtime Status</p>
     </div>
   </div>
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-label">Overall Score</div><div class="stat-value green">A+</div><div class="stat-sub">Excellent rating</div></div>
-    <div class="stat-card"><div class="stat-label">Critical CVEs</div><div class="stat-value green">0</div><div class="stat-sub">No critical issues</div></div>
-    <div class="stat-card"><div class="stat-label">Low Warnings</div><div class="stat-value yellow">2</div><div class="stat-sub">Dependency audit</div></div>
-    <div class="stat-card"><div class="stat-label">Last Scan</div><div class="stat-value accent">Auto</div><div class="stat-sub">Every build</div></div>
+    <div class="stat-card"><div class="stat-label">Running</div><div class="stat-value green">3</div><div class="stat-sub">Healthy containers</div></div>
+    <div class="stat-card"><div class="stat-label">Images on Hub</div><div class="stat-value accent">2</div><div class="stat-sub">jatink9599/autodeployx</div></div>
+    <div class="stat-card"><div class="stat-label">Total Size</div><div class="stat-value yellow">464MB</div><div class="stat-sub">Backend + Nginx + DB</div></div>
+    <div class="stat-card"><div class="stat-label">Uptime</div><div class="stat-value green">99.8%</div><div class="stat-sub">Last 30 days</div></div>
   </div>
   <div style="display:flex;flex-direction:column;gap:1.5rem">
+    <div class="panel">
+      <div class="panel-header"><strong>🐳 Running Containers</strong><span style="font-size:0.72rem">docker ps</span></div>
+      <table class="history-table">
+        <thead><tr><th>Container Name</th><th>Image</th><th>Port</th><th>Role</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--accent)">autodeployx_nginx_1</td><td style="color:var(--muted)">autodeployx-nginx:latest</td><td>8081→80</td><td>Serves Frontend — HTML/CSS/JS</td><td><span class="badge success">● Running</span></td></tr>
+          <tr><td style="color:var(--accent)">autodeployx_backend_1</td><td style="color:var(--muted)">autodeployx-backend:latest</td><td>3000</td><td>Backend API — Node.js server</td><td><span class="badge success">● Running</span></td></tr>
+          <tr><td style="color:var(--accent)">autodeployx_db_1</td><td style="color:var(--muted)">postgres:15</td><td>5432</td><td>Database — PostgreSQL</td><td><span class="badge running">● Running</span></td></tr>
+        </tbody>
+      </table>
+    </div>
     <div class="main-grid">
       <div class="panel">
-        <div class="panel-header"><strong>🔒 Security Checks — Detail</strong></div>
-
-        <div style="padding:1rem 1.5rem;border-bottom:1px solid rgba(30,48,88,0.5)">
-          <div style="display:flex;align-items:center;margin-bottom:0.4rem"><span style="font-size:1rem">🛡️</span><span style="flex:1;margin-left:0.75rem;font-size:0.8rem">OWASP Top 10</span><span class="sec-status pass">✓ PASS</span></div>
-          <p style="font-size:0.74rem;color:var(--muted);padding-left:1.75rem">Web ki 10 sabse common vulnerabilities check — SQL Injection, XSS, Broken Auth etc.</p>
-        </div>
-        <div style="padding:1rem 1.5rem;border-bottom:1px solid rgba(30,48,88,0.5)">
-          <div style="display:flex;align-items:center;margin-bottom:0.4rem"><span style="font-size:1rem">🔐</span><span style="flex:1;margin-left:0.75rem;font-size:0.8rem">Secret Detection</span><span class="sec-status pass">✓ PASS</span></div>
-          <p style="font-size:0.74rem;color:var(--muted);padding-left:1.75rem">Code mein koi API key, password ya token hardcoded nahi — Git history bhi scan hoti hai.</p>
-        </div>
-        <div style="padding:1rem 1.5rem;border-bottom:1px solid rgba(30,48,88,0.5)">
-          <div style="display:flex;align-items:center;margin-bottom:0.4rem"><span style="font-size:1rem">📦</span><span style="flex:1;margin-left:0.75rem;font-size:0.8rem">Dependency Audit (npm)</span><span class="sec-status warn">⚠ 2 LOW</span></div>
-          <p style="font-size:0.74rem;color:var(--muted);padding-left:1.75rem">npm packages ki known vulnerabilities check. 2 LOW severity — koi critical nahi, pipeline nahi ruki.</p>
-        </div>
-        <div style="padding:1rem 1.5rem;border-bottom:1px solid rgba(30,48,88,0.5)">
-          <div style="display:flex;align-items:center;margin-bottom:0.4rem"><span style="font-size:1rem">🐳</span><span style="flex:1;margin-left:0.75rem;font-size:0.8rem">Container Scan — Trivy</span><span class="sec-status pass">✓ PASS</span></div>
-          <p style="font-size:0.74rem;color:var(--muted);padding-left:1.75rem">Docker image ke andar OS + libraries ki CVE database se scan. Trivy open-source tool use hota hai.</p>
-        </div>
-        <div style="padding:1rem 1.5rem">
-          <div style="display:flex;align-items:center;margin-bottom:0.4rem"><span style="font-size:1rem">🌐</span><span style="flex:1;margin-left:0.75rem;font-size:0.8rem">SSL/TLS Check</span><span class="sec-status pass">✓ PASS</span></div>
-          <p style="font-size:0.74rem;color:var(--muted);padding-left:1.75rem">HTTPS certificate valid, TLS version updated, weak ciphers nahi hain.</p>
-        </div>
+        <div class="panel-header"><strong>📦 DockerHub Images</strong></div>
+        <div class="docker-item"><span class="docker-icon">📦</span><div style="flex:1"><div class="docker-name">jatink9599/autodeployx-backend</div><div class="docker-tag">Node.js 18 Alpine · 128MB · Auto pushed by Jenkins</div></div><span class="badge success">latest</span></div>
+        <div class="docker-item"><span class="docker-icon">🌐</span><div style="flex:1"><div class="docker-name">jatink9599/autodeployx-nginx</div><div class="docker-tag">Nginx Alpine · 24MB · Serves frontend files</div></div><span class="badge success">latest</span></div>
+        <div style="padding:1rem 1.5rem;background:var(--surface2);border-top:1px solid var(--border);font-size:0.72rem;color:var(--muted)">💡 Jenkins pipeline automatically builds, tags, and pushes these images to DockerHub — on every git push.</div>
       </div>
-
-      <div style="display:flex;flex-direction:column;gap:1.5rem">
-        <div class="panel">
-          <div class="panel-header"><strong>⚡ DevSecOps Kya Hai?</strong></div>
-          <div style="padding:1.2rem 1.5rem;font-size:0.8rem;line-height:1.9;color:var(--muted)">
-            <p style="margin-bottom:0.6rem"><span style="color:var(--accent);font-weight:700">Dev</span> + <span style="color:var(--green);font-weight:700">Sec</span> + <span style="color:var(--accent2);font-weight:700">Ops</span></p>
-            <p style="margin-bottom:0.6rem">Pehle security sirf deployment ke baad check hoti thi. Ab <strong style="color:var(--text)">har build pe automatically</strong> security scan hoti hai.</p>
-            <p>Is project mein <strong style="color:var(--accent)">Trivy</strong> tool Jenkins pipeline ke andar Scan stage mein Docker image check karta hai — critical vulnerability mili toh pipeline rok di jaati hai.</p>
-          </div>
-        </div>
-        <div class="panel">
-          <div class="panel-header"><strong>🔑 Credentials Security</strong></div>
-          <div class="docker-item"><span>🔒</span><div><div class="docker-name">dockerhub-creds</div><div class="docker-tag">Jenkins Credentials Store — Encrypted</div></div><span class="badge success">Secure</span></div>
-          <div class="docker-item"><span>🔑</span><div><div class="docker-name">AutoDeployX.pem</div><div class="docker-tag">AWS EC2 SSH Key — Local only, never in Git</div></div><span class="badge success">Secure</span></div>
-          <div class="docker-item"><span>🚫</span><div><div class="docker-name">No Hardcoded Secrets</div><div class="docker-tag">withCredentials() use kiya — Industry best practice</div></div><span class="badge success">✓</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-
-<!-- ════════ PAGE: ABOUT ════════ -->
-<div id="page-about" class="page-section" style="display:none">
-<div class="wrapper">
-  <div class="hero">
-    <div class="hero-left">
-      <h1><span class="highlight">About</span><br/>AutoDeployX</h1>
-      <p>Project Overview · Tech Stack · Architecture · Developer Info</p>
-    </div>
-  </div>
-  <div style="display:flex;flex-direction:column;gap:1.5rem">
-
-    <div class="panel">
-      <div class="panel-header"><strong>📌 Project Overview</strong></div>
-      <div style="padding:1.5rem;font-size:0.83rem;line-height:2;color:var(--muted)">
-        <p style="color:var(--text);font-size:1rem;font-family:'Syne',sans-serif;font-weight:700;margin-bottom:0.8rem">AutoDeployX — Automated DevSecOps CI/CD Platform</p>
-        <p style="margin-bottom:1rem">AutoDeployX ek <strong style="color:var(--accent)">end-to-end DevSecOps project</strong> hai jisme developer ka code GitHub se automatically production server tak pahunchta hai — bina kisi manual step ke (sirf ek approval ke baad).</p>
-        <p style="margin-bottom:1rem">Jab developer <code style="color:var(--green);background:rgba(0,255,163,0.08);padding:2px 6px;border-radius:4px">git push</code> karta hai, GitHub Webhook Jenkins ko notify karta hai. Jenkins automated pipeline chalata hai — code build hota hai, Docker images banti hain, security scan hoti hai, DockerHub pe push hota hai, aur finally AWS EC2 server pe deploy ho jaata hai.</p>
-        <p>Yeh project <strong style="color:var(--accent)">college final year project</strong> ke roop mein banaya gaya hai jo real-world industry practices follow karta hai.</p>
-      </div>
-    </div>
-
-    <div class="main-grid">
       <div class="panel">
-        <div class="panel-header"><strong>🛠️ Tech Stack</strong></div>
-        <table class="history-table">
-          <thead><tr><th>Technology</th><th>Role</th><th>Kahan Use Hua</th></tr></thead>
-          <tbody>
-            <tr><td style="color:var(--accent)">GitHub</td><td>Source Code Management</td><td>Code store + Webhook trigger</td></tr>
-            <tr><td style="color:var(--accent)">Jenkins</td><td>CI/CD Automation Server</td><td>Pipeline run karta hai</td></tr>
-            <tr><td style="color:var(--accent)">Docker</td><td>Containerization</td><td>App ko container mein band karta hai</td></tr>
-            <tr><td style="color:var(--accent)">DockerHub</td><td>Image Registry</td><td>Docker images store + share</td></tr>
-            <tr><td style="color:var(--accent)">Nginx</td><td>Web Server / Reverse Proxy</td><td>Frontend serve karta hai</td></tr>
-            <tr><td style="color:var(--accent)">Node.js</td><td>Backend Runtime</td><td>API server — port 3000</td></tr>
-            <tr><td style="color:var(--accent)">AWS EC2</td><td>Cloud Server (Ubuntu)</td><td>Production deployment</td></tr>
-            <tr><td style="color:var(--accent)">Trivy</td><td>Security Scanner</td><td>Docker image CVE scan</td></tr>
-            <tr><td style="color:var(--accent)">HTML/CSS/JS</td><td>Frontend Dashboard</td><td>Yeh UI — AutoDeployX dashboard</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:1.5rem">
-        <div class="panel">
-          <div class="panel-header"><strong>👨‍💻 Developer</strong></div>
-          <div style="padding:1.5rem;text-align:center">
-            <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 1rem">👤</div>
-            <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.3rem">Jatin Kapoor</div>
-            <div style="font-size:0.75rem;color:var(--muted);margin-bottom:1rem">DevSecOps · Cloud · Full Stack</div>
-            <div style="font-size:0.78rem;color:var(--accent);padding:0.3rem 0">🐙 github.com/jatinkapoor009</div>
-            <div style="font-size:0.78rem;color:var(--accent);padding:0.3rem 0">🐳 hub.docker.com/u/jatink9599</div>
-          </div>
-        </div>
-        <div class="panel">
-          <div class="panel-header"><strong>📊 Project Stats</strong></div>
-          <div class="docker-item"><span>📁</span><div><div class="docker-name">Total Files</div><div class="docker-tag">HTML, CSS, JS, Dockerfiles, Jenkinsfile, nginx.conf</div></div><span style="color:var(--accent)">12+</span></div>
-          <div class="docker-item"><span>⚙️</span><div><div class="docker-name">Pipeline Stages</div><div class="docker-tag">Checkout to Production deploy</div></div><span style="color:var(--accent)">9</span></div>
-          <div class="docker-item"><span>🐳</span><div><div class="docker-name">Docker Images</div><div class="docker-tag">Backend + Nginx on DockerHub</div></div><span style="color:var(--accent)">2</span></div>
-          <div class="docker-item"><span>☁️</span><div><div class="docker-name">Cloud Platform</div><div class="docker-tag">AWS EC2 Ubuntu — Live</div></div><span style="color:var(--green)">● Live</span></div>
-        </div>
+        <div class="panel-header"><strong>🗂️ Docker Compose Files</strong></div>
+        <div class="docker-item"><span>📄</span><div><div class="docker-name">docker-compose.yml</div><div class="docker-tag">Default — For local development</div></div></div>
+        <div class="docker-item"><span>🧪</span><div><div class="docker-name">docker-compose.staging.yml</div><div class="docker-tag">Staging — For Jenkins build and test</div></div></div>
+        <div class="docker-item"><span>🚀</span><div><div class="docker-name">docker-compose.prod.yml</div><div class="docker-tag">Production — For live server deployment</div></div></div>
       </div>
     </div>
-
-    <!-- Architecture -->
     <div class="panel">
-      <div class="panel-header"><strong>🏛️ System Architecture — Full Flow</strong></div>
-      <div style="padding:1.5rem;overflow-x:auto">
-        <div style="display:flex;align-items:center;min-width:700px">
-          <div style="background:rgba(0,212,255,0.08);border:1px solid var(--accent);border-radius:10px;padding:0.8rem 1rem;text-align:center;min-width:100px"><div style="font-size:1.4rem">💻</div><div style="font-size:0.7rem;font-weight:600;color:var(--accent);margin-top:4px">Developer</div><div style="font-size:0.62rem;color:var(--muted)">git push</div></div>
-          <div style="flex:1;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div>
-          <div style="background:rgba(0,212,255,0.08);border:1px solid var(--accent);border-radius:10px;padding:0.8rem 1rem;text-align:center;min-width:100px"><div style="font-size:1.4rem">🐙</div><div style="font-size:0.7rem;font-weight:600;color:var(--accent);margin-top:4px">GitHub</div><div style="font-size:0.62rem;color:var(--muted)">Webhook fire</div></div>
-          <div style="flex:1;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div>
-          <div style="background:rgba(124,58,237,0.1);border:1px solid var(--accent2);border-radius:10px;padding:0.8rem 1rem;text-align:center;min-width:100px"><div style="font-size:1.4rem">⚙️</div><div style="font-size:0.7rem;font-weight:600;color:var(--accent2);margin-top:4px">Jenkins</div><div style="font-size:0.62rem;color:var(--muted)">Pipeline run</div></div>
-          <div style="flex:1;height:2px;background:linear-gradient(90deg,var(--accent2),var(--green))"></div>
-          <div style="background:rgba(0,212,255,0.08);border:1px solid var(--accent);border-radius:10px;padding:0.8rem 1rem;text-align:center;min-width:100px"><div style="font-size:1.4rem">🐳</div><div style="font-size:0.7rem;font-weight:600;color:var(--accent);margin-top:4px">DockerHub</div><div style="font-size:0.62rem;color:var(--muted)">Image push</div></div>
-          <div style="flex:1;height:2px;background:linear-gradient(90deg,var(--accent),var(--green))"></div>
-          <div style="background:rgba(0,255,163,0.08);border:1px solid var(--green);border-radius:10px;padding:0.8rem 1rem;text-align:center;min-width:100px"><div style="font-size:1.4rem">☁️</div><div style="font-size:0.7rem;font-weight:600;color:var(--green);margin-top:4px">AWS EC2</div><div style="font-size:0.62rem;color:var(--muted)">Live!</div></div>
-        </div>
-        <div style="margin-top:1.2rem;padding:1rem;background:var(--surface2);border-radius:8px;font-size:0.78rem;color:var(--muted);line-height:1.8">
-          <strong style="color:var(--text)">Complete Flow:</strong> Developer code push karta hai → GitHub webhook Jenkins trigger karta hai → Jenkins Docker image build karta hai → Security scan hoti hai → Image DockerHub pe push hoti hai → Staging pe deploy → Manual approval → Production deploy → <strong style="color:var(--green)">Site Live! 🚀</strong>
-        </div>
+      <div class="panel-header"><strong>🏗️ Nginx Dockerfile — Explained</strong></div>
+      <div class="terminal" style="height:auto;padding:1.2rem">
+        <span class="log-line info">FROM nginx:alpine</span><span class="log-line dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Lightweight nginx base image (5MB)</span><br>
+        <span class="log-line dim">RUN rm -rf /usr/share/nginx/html/*</span><span class="log-line dim">&nbsp; # Remove default files</span><br>
+        <span class="log-line success">COPY nginx/nginx.conf /etc/nginx/nginx.conf</span><span class="log-line dim">&nbsp; # Custom config</span><br>
+        <span class="log-line success">COPY frontend/ /usr/share/nginx/html/</span><span class="log-line dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Copy HTML/CSS/JS files</span><br>
+        <span class="log-line warn">EXPOSE 80</span><span class="log-line dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Expose the port</span>
       </div>
     </div>
-
-    <!-- Key Features -->
-    <div class="panel">
-      <div class="panel-header"><strong>⭐ Key Features & Learning Outcomes</strong></div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;padding:1.5rem">
-        <div style="background:var(--surface2);border-radius:10px;padding:1rem;border:1px solid var(--border)"><div style="font-size:1.2rem;margin-bottom:0.5rem">🔁</div><div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;margin-bottom:0.4rem">Auto CI/CD</div><div style="font-size:0.75rem;color:var(--muted)">Git push se automatic pipeline — zero manual steps</div></div>
-        <div style="background:var(--surface2);border-radius:10px;padding:1rem;border:1px solid var(--border)"><div style="font-size:1.2rem;margin-bottom:0.5rem">🔒</div><div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;margin-bottom:0.4rem">DevSecOps</div><div style="font-size:0.75rem;color:var(--muted)">Har build mein security scan — Trivy, OWASP, Secret detection</div></div>
-        <div style="background:var(--surface2);border-radius:10px;padding:1rem;border:1px solid var(--border)"><div style="font-size:1.2rem;margin-bottom:0.5rem">🧪</div><div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;margin-bottom:0.4rem">Staging → Prod</div><div style="font-size:0.75rem;color:var(--muted)">Pehle staging test, phir manual approval ke baad production</div></div>
-        <div style="background:var(--surface2);border-radius:10px;padding:1rem;border:1px solid var(--border)"><div style="font-size:1.2rem;margin-bottom:0.5rem">🐳</div><div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;margin-bottom:0.4rem">Containerized</div><div style="font-size:0.75rem;color:var(--muted)">Docker Compose se multi-container — reproducible environment</div></div>
-        <div style="background:var(--surface2);border-radius:10px;padding:1rem;border:1px solid var(--border)"><div style="font-size:1.2rem;margin-bottom:0.5rem">☁️</div><div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;margin-bottom:0.4rem">Cloud Deploy</div><div style="font-size:0.75rem;color:var(--muted)">AWS EC2 pe live deployment — real production environment</div></div>
-        <div style="background:var(--surface2);border-radius:10px;padding:1rem;border:1px solid var(--border)"><div style="font-size:1.2rem;margin-bottom:0.5rem">📊</div><div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;margin-bottom:0.4rem">Live Dashboard</div><div style="font-size:0.75rem;color:var(--muted)">HTML/CSS/JS dashboard — pipeline status, metrics, security, logs</div></div>
-      </div>
-    </div>
-
   </div>
 </div>
 </div>
-
-<!-- TOAST CONTAINER -->
-<div class="toast-container" id="toasts"></div>
-<script src="script.js"></script>
-</body>
-</html>
