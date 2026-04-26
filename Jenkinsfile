@@ -28,6 +28,16 @@ pipeline {
             }
         }
 
+        
+        stage('Trivy Security Scan') {
+            steps {
+                echo 'Scanning Docker Image with Trivy...'
+                sh '''
+                trivy image --exit-code 1 --severity HIGH,CRITICAL autodeployx_backend_staging
+                '''
+            }
+        }
+
         stage('DockerHub Login') {
             steps {
                 withCredentials([usernamePassword(
@@ -93,10 +103,10 @@ pipeline {
 
     post {
         success {
-            echo '🚀 Deployment Successful (Staging + Production)'
+            echo ' Deployment Successful (Staging + Production)'
         }
         failure {
-            echo '❌ Pipeline Failed'
+            echo ' Pipeline Failed (Security issue or deployment error)'
         }
     }
 }
