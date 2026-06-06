@@ -102,10 +102,10 @@ pipeline {
 
     post {
         success {
-            echo '🚀 Deployment Successful (Staging + Production)'
+            echo 'Deployment Successful (Staging + Production)'
         }
         failure {
-            echo '❌ Pipeline Failed (Security issue or deployment error)'
+            echo 'Pipeline Failed (Security issue or deployment error)'
         }
     }
 }
